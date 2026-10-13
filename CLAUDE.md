@@ -10,8 +10,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - ユーザーとのやり取りは、作成を始める前も含めて常に日本語で行う。
 - mod やそのフックモジュールを作成・デバッグするときは `plugin-authoring` スキルを使う。
-- `main` ブランチは保護されていて、直接 push できない。変更は必ずブランチを切って PR 経由でマージする(`gh pr create`)。承認者は `.github/CODEOWNERS` のとおり `tomoyankun` のみ。
-- mod のバージョンを上げるときは、`plugin.json` の `version`、`.claude-plugin/marketplace.json` の `ref`、同名の Git タグを揃える。手順は README の「リリース手順」に従う。
+- `main` ブランチは保護されていて、直接 push できない。ブランチを切り、`gh pr create` で PR を作成してマージする。承認者は `tomoyankun` だけである(`.github/CODEOWNERS`)。
+- mod のバージョンを上げるときは、次の3つを同じ値にする。手順は README の「リリース手順」に従う。
+  - `plugin.json` の `version`
+  - `.claude-plugin/marketplace.json` の `ref`
+  - Git タグ
 
 ## 構成
 
