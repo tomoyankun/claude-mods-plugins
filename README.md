@@ -62,9 +62,24 @@ Claude Code のプロンプトで次を入力します。
 
 インストール後はそのセッションですぐ有効になります。GitHub 以外のときは、`tomoyankun/claude-mods-plugins` の代わりに git の URL やローカルフォルダのパスも指定できます。
 
-導入先の `.claude/settings.json` に直接書いて、チーム全員に自動で案内することもできます(キー名は Claude Code の plugin 設定の仕様に従います。実際の書式は `claude-code-guide` などで確認してください)。
+導入先の `.claude/settings.json` に次のように書くと、そのリポジトリを開いて信頼したチーム全員に、marketplace の追加と mod の有効化が案内されます。
 
-更新は mod を修正して push したあと、導入先で `claude plugin update <mod名>` を実行し、続けて `/reload-plugins` を実行します。
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-mods-plugins": {
+      "source": { "source": "github", "repo": "tomoyankun/claude-mods-plugins" }
+    }
+  },
+  "enabledPlugins": {
+    "usage-status@claude-mods-plugins": true
+  }
+}
+```
+
+このリポジトリ自身の `.claude/settings.json` にも同じ内容を置いています。
+
+更新は、新しいバージョンをリリースしたあと(手順は「開発」節の「リリース手順」)、導入先で `claude plugin update <mod名>` を実行し、続けて `/reload-plugins` を実行します。
 
 ### 方法B: clone したフォルダを直接読み込む(開発・個人利用向け)
 
@@ -108,3 +123,19 @@ mods/<mod名>/
 ├── hooks/*.test.ts              # テスト
 └── types/index.d.ts             # $.state の型契約(必要な mod のみ)
 ```
+
+### リリース手順
+
+`.claude-plugin/marketplace.json` は、mod を `git-subdir` 形式でタグ(`ref`)に固定しています。`main` に push しただけでは利用者に届かないので、リリースは次の順で行います。`main` は保護されていて直接 push できないため、変更は必ず PR 経由です。
+
+1. ブランチを切り、`mods/<mod名>/.claude-plugin/plugin.json` の `version` を上げます。`version` が変わらないと、利用者側で更新が検知されません。
+2. `.claude-plugin/marketplace.json` の該当 mod の `ref` を、新しいタグ名(例: `v0.8.0`)に書き換えます。
+3. PR を作成してマージします。
+4. マージ後の `main` のコミットに、`ref` と同じ名前のタグを打って push します。タグが無い間は、その mod のインストールに失敗します。
+
+   ```bash
+   git switch main && git pull
+   git tag -a v0.8.0 -m "usage-status 0.8.0"
+   git push origin v0.8.0
+   ```
+5. 利用者は `claude plugin marketplace update claude-mods-plugins` に続けて `claude plugin update usage-status@claude-mods-plugins` を実行し、`/reload-plugins` で反映します。
