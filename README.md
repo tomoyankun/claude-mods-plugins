@@ -18,8 +18,8 @@ Claude Code の mod(プラグイン)を作るためのリポジトリです。
 - このリポジトリを clone 済みであること
 
 ```bash
-git clone <このリポジトリのURL>
-cd claudetest
+git clone https://github.com/tomoyankun/claude-mods-plugins
+cd claude-mods-plugins
 ```
 
 ### 2. mod を読み込んで起動する
@@ -49,10 +49,10 @@ claude plugin test mods/<mod名>       # hooks/*.test.ts の実行
 
 ### 方法A: marketplace からインストール(推奨)
 
-Claude Code のプロンプトで次を入力します。`<owner>/<repo>` は、このリポジトリを置いた GitHub のものに置き換えてください。
+Claude Code のプロンプトで次を入力します。
 
 ```
-/plugin install usage-status --marketplace <owner>/<repo>
+/plugin install usage-status --marketplace tomoyankun/claude-mods-plugins
 ```
 
 初回は `Add marketplace?` と聞かれるので `y`、続いてスコープを選びます。
@@ -60,7 +60,7 @@ Claude Code のプロンプトで次を入力します。`<owner>/<repo>` は、
 - **user スコープ**: 以後、どのリポジトリで開いたセッションでも有効になります。
 - **project スコープ**: 導入先リポジトリの `.claude/settings.json` に記録されます。チームで共有する場合に向きます。
 
-インストール後はそのセッションですぐ有効になります。GitHub 以外のときは、`<owner>/<repo>` の代わりに git の URL やローカルフォルダのパスも指定できます。
+インストール後はそのセッションですぐ有効になります。GitHub 以外のときは、`tomoyankun/claude-mods-plugins` の代わりに git の URL やローカルフォルダのパスも指定できます。
 
 導入先の `.claude/settings.json` に直接書いて、チーム全員に自動で案内することもできます(キー名は Claude Code の plugin 設定の仕様に従います。実際の書式は `claude-code-guide` などで確認してください)。
 
@@ -72,7 +72,7 @@ Claude Code のプロンプトで次を入力します。`<owner>/<repo>` は、
 
 ```bash
 cd /path/to/other-repo
-claude --plugin-dir ~/projects/claudetest/mods/usage-status
+claude --plugin-dir ~/projects/claude-mods-plugins/mods/usage-status
 ```
 
 毎回指定したくない場合は、`~/.claude/settings.json` の `env` に `CLAUDE_CODE_PLUGIN_DIRS`(絶対パス、`~` 可、複数はパス区切り文字で連結)を書きます。プロジェクト側の settings には書けません。
@@ -80,7 +80,7 @@ claude --plugin-dir ~/projects/claudetest/mods/usage-status
 ```json
 {
   "env": {
-    "CLAUDE_CODE_PLUGIN_DIRS": "~/projects/claudetest/mods/usage-status"
+    "CLAUDE_CODE_PLUGIN_DIRS": "~/projects/claude-mods-plugins/mods/usage-status"
   }
 }
 ```
