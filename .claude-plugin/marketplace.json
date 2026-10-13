@@ -3,6 +3,14 @@
   "description": "Claude Code mods: usage-status",
   "owner": { "name": "tomoyankun" },
   "plugins": [
-    { "name": "usage-status", "source": "./mods/usage-status" }
+    {
+      "name": "usage-status",
+      "source": {
+        "source": "git-subdir",
+        "url": "tomoyankun/claude-mods-plugins",
+        "path": "mods/usage-status",
+        "ref": "v0.7.0"
+      }
+    }
   ]
 }
