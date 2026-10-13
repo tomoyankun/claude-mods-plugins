@@ -1,4 +1,4 @@
-# claudetest
+# Claude Mod plugins
 
 Claude Code の mod(プラグイン)を作るためのリポジトリです。
 
