@@ -1,0 +1,8 @@
+{
+  "name": "claudetest-mods",
+  "description": "Claude Code mods: usage-status",
+  "owner": { "name": "tomoyankun" },
+  "plugins": [
+    { "name": "usage-status", "source": "./mods/usage-status" }
+  ]
+}
