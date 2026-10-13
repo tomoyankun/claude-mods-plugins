@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "claude-mods-plugins": {
+      "source": { "source": "github", "repo": "tomoyankun/claude-mods-plugins" }
+    }
+  },
+  "enabledPlugins": {
+    "usage-status@claude-mods-plugins": true
+  }
+}
