@@ -22,9 +22,9 @@ test('appends the reset time in local time', () => {
     { kind: 'seven_day', percentUsed: 36, resetsAt },
   ])
   expect(segments.map(s => s.text)).toEqual([
-    '5h ████░░░░░░ 38% ↻15:05',
-    '7d ████░░░░░░ 36% ↻10/9 15:05',
-    'context usage -',
+    '5h ████░░░░░░ 38% ↻ 15:05',
+    '7d ████░░░░░░ 36% ↻ 10/9 15:05',
+    'context usage ░░░░░░░░░░ 0/200k (0%)',
   ])
 })
 
@@ -37,7 +37,7 @@ test('omits the reset time when it is missing or invalid', () => {
 })
 
 test('shows only tokens off a subscription', () => {
-  expect(buildSegments({ window: 200_000 }, [])).toEqual([{ text: 'context usage -', percent: 0 }])
+  expect(buildSegments({ window: 200_000 }, [])).toEqual([{ text: 'context usage ░░░░░░░░░░ 0/200k (0%)', percent: 0 }])
 })
 
 test('classifies a segment into three levels', () => {

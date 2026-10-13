@@ -67,7 +67,7 @@ export const formatReset = (kind: string, resetsAt: string | undefined): string 
 
   const time = `${pad(date.getHours())}:${pad(date.getMinutes())}`
 
-  return kind === 'five_hour' ? ` ↻${time}` : ` ↻${date.getMonth() + 1}/${date.getDate()} ${time}`
+  return kind === 'five_hour' ? ` ↻ ${time}` : ` ↻ ${date.getMonth() + 1}/${date.getDate()} ${time}`
 }
 
 export const buildSegments = (
@@ -80,14 +80,13 @@ export const buildSegments = (
       text: `${LABELS[r.kind]} ${gauge(r.percentUsed)} ${r.percentUsed}%${formatReset(r.kind, r.resetsAt)}`,
       percent: r.percentUsed,
     }))
+  // 最初の応答が返るまでtokensは無いので、0として空のゲージを出す。
+  const used = context.tokens ?? 0
   const percent = context.percent ?? 0
-  const tokens: Segment =
-    context.tokens === undefined
-      ? { text: 'context usage -', percent: 0 }
-      : {
-          text: `context usage ${gauge(percent)} ${formatTokens(context.tokens)}/${formatTokens(context.window)} (${percent}%)`,
-          percent,
-        }
+  const tokens: Segment = {
+    text: `context usage ${gauge(percent)} ${formatTokens(used)}/${formatTokens(context.window)} (${percent}%)`,
+    percent,
+  }
 
   return [...limits, tokens]
 }
